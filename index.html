@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Inventory</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#cfe2ff">
     <meta name="description" content="Track your daily inventory of personal characteristics">
@@ -29,6 +34,8 @@
             padding: 15px;
             border-left: 1px solid black;
             border-right: 1px solid black;
+            font-size: 1rem;
+            line-height: 1.4;
         }
 
         .table {
@@ -36,6 +43,46 @@
             border-bottom: 2px solid black;
             border-left: 2px solid black;
             border-right: 2px solid black;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .table th {
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        .table td {
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 450px) {
+            .table th,
+            .table td {
+                padding: 8px 4px;
+                font-size: 0.9rem;
+                line-height: 1.2;
+            }
+
+            .table th {
+                font-size: 0.85rem;
+            }
+
+            /* Specific column widths for small screens */
+            .table th:nth-child(1),
+            .table td:nth-child(1) {
+                width: 40%;
+            }
+            .table th:nth-child(2),
+            .table td:nth-child(2) {
+                width: 20%;
+            }
+            .table th:nth-child(3),
+            .table td:nth-child(3) {
+                width: 40%;
+            }
         }
 
         .table-dark th {
@@ -114,7 +161,7 @@
         </div>
 
         <!-- Inventory Table -->
-        <div class="table-responsive" style="max-width: 700px; margin: 0 auto;">
+        <div class="table-responsive" style="max-width: 700px; min-width: 375px; margin: 0 auto;">
             <table class="table table-bordered" id="inventory-table">
                 <tr class="alert-primary">
                     <th>PERSONALITY CHARACTERISTICS OF SELF-WILL</th>
@@ -129,14 +176,14 @@
         <!-- Pie Charts -->
         <div class="row mt-4">
             <div class="col-12 text-center">
-                <h4 class="mb-3">Today's Totals</h4>
-                <div style="width: 375px; margin: 0 auto;">
+                <h4 class="mb-3">Today's Daily Totals</h4>
+                <div style="width: 375px; height: 375px; margin: 0 auto;">
                     <canvas id="daily-chart"></canvas>
                 </div>
             </div>
             <div class="col-12 text-center mt-4">
-                <h4 class="mb-3">Average Totals</h4>
-                <div style="width: 375px; margin: 0 auto;">
+                <h4 class="mb-3">All Daily Totals (Average)</h4>
+                <div style="width: 375px; height: 375px; margin: 0 auto;">
                     <canvas id="average-chart"></canvas>
                 </div>
             </div>

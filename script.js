@@ -34,18 +34,66 @@ const dailyChart = new Chart(document.getElementById('daily-chart'), {
   type: 'pie',
   data: {
     labels: ['Self-Will', 'God\'s Will'],
-    datasets: [{ data: [0, 0], backgroundColor: ['#ffe69c', '#a3cfbb'] }]
+    datasets: [{ 
+      data: [0, 1], 
+      backgroundColor: ['#ffe69c', '#a3cfbb'],
+      borderWidth: 1,
+      borderColor: '#000',
+      hoverOffset: 0
+    }]
   },
-  options: { responsive: true }
+  options: { 
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 1,
+    cutout: '0%',
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom'
+      },
+      tooltip: {
+        enabled: true
+      }
+    },
+    animation: {
+      animateRotate: true,
+      animateScale: true
+    }
+  }
 });
 
 const averageChart = new Chart(document.getElementById('average-chart'), {
   type: 'pie',
   data: {
     labels: ['Avg Self-Will', 'Avg God\'s Will'],
-    datasets: [{ data: [0, 0], backgroundColor: ['#ffe69c', '#a3cfbb'] }]
+    datasets: [{ 
+      data: [0, 1], 
+      backgroundColor: ['#ffe69c', '#a3cfbb'],
+      borderWidth: 1,
+      borderColor: '#000',
+      hoverOffset: 0
+    }]
   },
-  options: { responsive: true }
+  options: { 
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 1,
+    cutout: '0%',
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom'
+      },
+      tooltip: {
+        enabled: true
+      }
+    },
+    animation: {
+      animateRotate: true,
+      animateScale: true
+    }
+  }
 });
 
 // Core Functions
