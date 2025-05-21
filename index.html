@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -148,6 +150,48 @@
                 <button id="reset-btn" class="btn btn-secondary">Reset Data</button>
             </div>
         </div>
+
+        <!-- Add to Home Screen Button -->
+        <div class="row mt-4">
+            <div class="col text-center">
+                <button id="add-to-home-btn" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add to Home Screen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add to Home Screen Instructions Modal -->
+    <div class="modal fade" id="add-to-home-modal" tabindex="-1" role="dialog" aria-labelledby="add-to-home-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add-to-home-modal-label">Add to Home Screen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="ios-instructions" style="display: none;">
+                        <h6>iOS Instructions:</h6>
+                        <ol>
+                            <li>Tap the Share button <i class="fas fa-share"></i> at the bottom of your browser</li>
+                            <li>Scroll down and tap "Add to Home Screen"</li>
+                            <li>Tap "Add" in the top right corner</li>
+                        </ol>
+                    </div>
+                    <div id="android-instructions" style="display: none;">
+                        <h6>Android Instructions:</h6>
+                        <ol>
+                            <li>Tap the menu button (three dots) in your browser</li>
+                            <li>Tap "Add to Home screen" or "Install app"</li>
+                            <li>Tap "Add" or "Install" to confirm</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Success Dialog -->
@@ -208,6 +252,25 @@
                     });
             });
         }
+    </script>
+
+    <!-- Add to Home Screen Script -->
+    <script>
+        document.getElementById('add-to-home-btn').addEventListener('click', function() {
+            const modal = new bootstrap.Modal(document.getElementById('add-to-home-modal'));
+            const iosInstructions = document.getElementById('ios-instructions');
+            const androidInstructions = document.getElementById('android-instructions');
+            
+            // Detect device
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isAndroid = /Android/.test(navigator.userAgent);
+            
+            // Show appropriate instructions
+            iosInstructions.style.display = isIOS ? 'block' : 'none';
+            androidInstructions.style.display = isAndroid ? 'block' : 'none';
+            
+            modal.show();
+        });
     </script>
 </body>
 </html>
