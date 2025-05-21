@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Daily Inventory App",
   "scripts": {
-    "generate-favicon": "node generate-favicon.js"
+    "generate-favicon": "node generate-favicon.js",
+    "build": "echo 'Build completed - static site ready for deployment'"
   },
   "dependencies": {
     "sharp": "^0.32.1"
