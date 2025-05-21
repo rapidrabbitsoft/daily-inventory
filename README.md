@@ -3,7 +3,7 @@
 A web application for tracking daily inventory of personal characteristics and behaviors.
 
 Found here:
-[https://rapidrabbitsoft.github.io/daily-inventory/](https://rapidrabbitsoft.github.io/daily-inventory/)
+[https://dailyinventory.github.io/](https://dailyinventory.github.io/)
 
 ## Features
 
