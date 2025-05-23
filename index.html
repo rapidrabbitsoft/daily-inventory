@@ -330,27 +330,35 @@
             modal.show();
         });
 
-        // Prevent zoom but allow scrolling
+        // Prevent zoom but allow scrolling, excluding canvas elements
+        function shouldPreventZoom(e) {
+            // Don't prevent zoom on canvas elements
+            if (e.target.tagName.toLowerCase() === 'canvas') {
+                return false;
+            }
+            return e.scale !== 1;
+        }
+
         document.addEventListener('gesturestart', function(e) {
-            if (e.scale !== 1) {
+            if (shouldPreventZoom(e)) {
                 e.preventDefault();
             }
         }, { passive: false });
 
         document.addEventListener('gesturechange', function(e) {
-            if (e.scale !== 1) {
+            if (shouldPreventZoom(e)) {
                 e.preventDefault();
             }
         }, { passive: false });
 
         document.addEventListener('gestureend', function(e) {
-            if (e.scale !== 1) {
+            if (shouldPreventZoom(e)) {
                 e.preventDefault();
             }
         }, { passive: false });
 
         document.addEventListener('touchmove', function(e) {
-            if (e.scale !== 1) {
+            if (shouldPreventZoom(e)) {
                 e.preventDefault();
             }
         }, { passive: false });
