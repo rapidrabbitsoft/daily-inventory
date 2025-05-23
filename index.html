@@ -23,6 +23,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Day.js and plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/timezone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/utc.js"></script>
+    <script>
+        dayjs.extend(dayjs_plugin_utc);
+        dayjs.extend(dayjs_plugin_timezone);
+    </script>
     <style>
         html, body {touch-action: none;}
         body {
@@ -154,6 +162,7 @@
                 <button id="prev-date" class="btn btn-primary me-2">&#8592;</button>
                 <input type="text" id="date-display" class="h3 border-0 bg-transparent text-center" style="width: auto;" readonly>
                 <button id="next-date" class="btn btn-primary ms-2">&#8594;</button>
+                <div id="timezone-display" class="small text-muted mt-1"></div>
             </div>
         </div>
 
@@ -173,7 +182,7 @@
                 <!-- Table content will be dynamically inserted -->
             </table>
         </div>
-        <div id="remaining-fields-bottom" class="mt-3" style="max-width: 700px; margin: 0 auto;"></div>
+        <div id="remaining-fields-bottom" class="mt-0" style="max-width: 700px; margin: 0 auto;"></div>
 
         <!-- Pie Charts -->
         <div class="row mt-4">
@@ -338,7 +347,16 @@
             // special hack to prevent zoom-to-tabs gesture in safari
             document.body.style.zoom = 0.99;
         });
-
+        // window.addEventListener(
+        // "touchmove",
+        // function (event) {
+        // if (event.scale !== 1) {
+        // event.preventDefault();
+        // event.stopImmediatePropagation();
+        // }
+        // },
+        // { passive: false }
+        // );
     </script>
 </body>
 </html>

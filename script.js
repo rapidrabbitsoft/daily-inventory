@@ -27,7 +27,24 @@ const inventoryData = [
 ];
 
 // State
-let currentDate = new Date().toISOString().split('T')[0];
+let currentDate = dayjs().format('YYYY-MM-DD');
+// Get timezone from browser's Intl API first, then fallback to Day.js guess
+const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const userTimezone = browserTimezone || dayjs.tz.guess();
+
+// Helper Functions
+function formatDateForDisplay(date) {
+    return dayjs.tz(date, userTimezone).format('MMMM D, YYYY');
+}
+
+function getTodayInUserTimezone() {
+    return dayjs().tz(userTimezone).format('YYYY-MM-DD');
+}
+
+function isDateInPast(date) {
+    return dayjs.tz(date, userTimezone).isBefore(dayjs().tz(userTimezone), 'day') || 
+           dayjs.tz(date, userTimezone).isSame(dayjs().tz(userTimezone), 'day');
+}
 
 // Chart instances
 const dailyChart = new Chart(document.getElementById('daily-chart'), {
@@ -99,17 +116,18 @@ const averageChart = new Chart(document.getElementById('average-chart'), {
 // Core Functions
 function setDate(date) {
   currentDate = date;
-  $('#date-display').val(currentDate);
+  $('#date-display').val(formatDateForDisplay(currentDate));
+  $('#timezone-display').text(`Timezone: ${userTimezone}`);
   loadTable();
   loadFromLocalStorage();
   updateCharts();
 }
 
 function adjustDate(offset) {
-  const date = new Date(currentDate);
-  date.setDate(date.getDate() + offset);
-  const newDate = date.toISOString().split('T')[0];
-  if (newDate <= new Date().toISOString().split('T')[0]) {
+  const newDate = dayjs.tz(currentDate, userTimezone)
+      .add(offset, 'day')
+      .format('YYYY-MM-DD');
+  if (isDateInPast(newDate)) {
     setDate(newDate);
   }
 }
@@ -167,12 +185,16 @@ function updateRemainingFields() {
   const filledFields = selections.filter(v => v !== null).length;
   const remainingFields = totalFields - filledFields;
   
-  const alertHtml = remainingFields === 0 
-      ? `<div class="alert text-center" role="alert" style="background-color: #a3cfbb; border-color: #a3cfbb; color: #000;">Daily inventory is complete for ${currentDate}</div>`
-      : `<div class="alert alert-info" role="alert">Answers Remaining: <span id="fields-left">${remainingFields}</span></div>`;
+  const topAlertHtml = remainingFields === 0 
+      ? `<div class="alert text-center mb-3" role="alert" style="background-color: #a3cfbb; border-color: #a3cfbb; color: #000;">Daily inventory is complete for ${currentDate}</div>`
+      : `<div class="alert alert-info text-center mb-3" role="alert">Answers Remaining: <span id="fields-left">${remainingFields}</span></div>`;
   
-  $('#remaining-fields').html(alertHtml);
-  $('#remaining-fields-bottom').html(alertHtml);
+  const bottomAlertHtml = remainingFields === 0 
+      ? `<div class="alert text-center mt-0" role="alert" style="background-color: #a3cfbb; border-color: #a3cfbb; color: #000;">Daily inventory is complete for ${currentDate}</div>`
+      : `<div class="alert alert-info text-center mt-0" role="alert">Answers Remaining: <span id="fields-left">${remainingFields}</span></div>`;
+  
+  $('#remaining-fields').html(topAlertHtml);
+  $('#remaining-fields-bottom').html(bottomAlertHtml);
 }
 
 function updateCharts() {
@@ -312,7 +334,8 @@ $(document).ready(function() {
     $('#reset-modal').modal('hide');
   });
 
-  // Initialize
+  // Initialize with today's date in user's timezone
+  currentDate = getTodayInUserTimezone();
   setDate(currentDate);
   updateExportButton();
 });
