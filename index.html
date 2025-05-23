@@ -330,33 +330,30 @@
             modal.show();
         });
 
+        // Prevent zoom but allow scrolling
         document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-            // special hack to prevent zoom-to-tabs gesture in safari
-            document.body.style.zoom = 0.99;
-        });
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         document.addEventListener('gesturechange', function(e) {
-            e.preventDefault();
-            // special hack to prevent zoom-to-tabs gesture in safari
-            document.body.style.zoom = 0.99;
-        });
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         document.addEventListener('gestureend', function(e) {
-            e.preventDefault();
-            // special hack to prevent zoom-to-tabs gesture in safari
-            document.body.style.zoom = 0.99;
-        });
-        // window.addEventListener(
-        // "touchmove",
-        // function (event) {
-        // if (event.scale !== 1) {
-        // event.preventDefault();
-        // event.stopImmediatePropagation();
-        // }
-        // },
-        // { passive: false }
-        // );
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
